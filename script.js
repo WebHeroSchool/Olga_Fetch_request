@@ -2,7 +2,6 @@
 const url = window.location.toString();
 let getUserName = function(url){
 	let urlPart = url.split('=');
-  alert(urlPart);
   let userName = urlPart[1];
 	if (userName  == undefined) {
         userName = 'OlgaVinogradova';
