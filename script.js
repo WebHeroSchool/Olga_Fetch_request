@@ -9,7 +9,6 @@ let getUserName = function(url){
      return userName;
 }
 
-
 let getDate = new Promise((resolve, reject) => {
   let date = new Date();
   let time = document.getElementById('time');
