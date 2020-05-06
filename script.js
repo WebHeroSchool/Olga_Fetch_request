@@ -11,8 +11,6 @@ let getUserName = function(url){
 
 let getDate = new Promise((resolve, reject) => {
   let date = new Date();
-  let time = document.getElementById('time');
-  time.innerHTML = date;
   setTimeout(() => date ? resolve(date) : reject ('Ошибка вычисления времени'), 3000)
 })
 
@@ -21,13 +19,11 @@ let getRequest = fetch('https://api.github.com/users/' + name)
     
 Promise.all([getRequest, getDate])
     .then(([request, date]) => {
-      if (request.status != 200) {
-          return null;
-      } else {
-          return request.json();
-      }
-    })
+    requestInfo = request;
+    requestDate = date;
+  })
 
+    .then(res => requestInfo.json())
     .then(json => {
       let getName = () => {
         let user_name = document.querySelector('.user_name');
@@ -46,13 +42,18 @@ Promise.all([getRequest, getDate])
         user_info.innerHTML = json.bio;
       }
 
+      let addDate = () => {
+      let time = document.getElementById('time');
+        time.innerHTML = requestDate;
+      }
+
       let preloader = document.getElementById('cube-loader');
-            preloader.style.display = 'none';
+        preloader.style.display = 'none';
         
       getName();
       getAvatar();
       getInfo();
-
+      addDate();
     })
     
     .catch(err => document.body.innerHTML = 'Информация о пользователе не доступна');
