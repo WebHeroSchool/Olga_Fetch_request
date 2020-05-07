@@ -25,9 +25,14 @@ Promise.all([getRequest, getDate])
 
     .then(res => requestInfo.json())
     .then(json => {
-      let getName = () => {
+    if (json.login !=undefined) {
+      let getName = () => {        
         let user_name = document.querySelector('.user_name');
-          user_name.innerHTML = json.login;
+          user_name.innerHTML = json.name;
+            if (json.name ===null) {
+            let nickname = json.login;
+            user_name.innerHTML = nickname;
+            }
         let link = document.querySelector('.link');
           link.href = json.html_url;
       }
@@ -54,6 +59,10 @@ Promise.all([getRequest, getDate])
       getAvatar();
       getInfo();
       addDate();
+    } 
+      else {
+        alert('Данный профиль не найден')
+      }
     })
     
     .catch(err => document.body.innerHTML = 'Информация о пользователе не доступна');
